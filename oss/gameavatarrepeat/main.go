@@ -102,7 +102,7 @@ func main() {
 	defer f2.Close()
 	defer f3.Close()
 
-	uri := fmt.Sprintf("https://sc.ftqq.com/SCU9426Tf8c93224ef853531d39171ed2ee44dda594b812d41eff.send?text=%s&desp=%s", "删除头像脚本通知", "数据处理完成" + fileprefix)
+	uri := fmt.Sprintf("https://sc.ftqq.com/%s.send?text=%s&desp=%s", viper.GetString("pushKey"), "删除头像脚本通知", "数据处理完成" + fileprefix)
 	defer func() {
 		gout.GET(uri).Do()
 		log.Println("数据处理完成", fileprefix, txtPath)
@@ -192,29 +192,6 @@ func doSomethings(object oss.ObjectProperties) error {
 		if z, err := url.Parse(faceurl); err != nil {
 			return fmt.Errorf("链接不正确")
 		} else {
-			//if exits, err := bunt.Get("cache", k); err != nil {
-			//	log.Println("err", err)
-			//} else {
-			// 读取数据
-			//if len(exits) > 0 {
-			// 处理时间
-			//log.Println("value", exits)
-
-			// 获取object的Tagging信息。
-			//taggingResult, err := bucket.GetObjectTagging(object.Key)
-			//if err != nil {
-			//	fmt.Println("Error:", err)
-			//	os.Exit(-1)
-			//}
-
-			// fmt.Printf("Object Tagging: %v\n", taggingResult)
-
-			//for _,v := range taggingResult.Tags {
-			//	if v.Key == Tag && v.Value == TagValue {
-			//		// log.Println("发现tag:" +  Tag + " > 该条记录需要删除")
-			//	}
-			//}
-
 			// 判断时间， 存入最新时间
 			timestamps := object.LastModified.Unix()
 			//timestamps_cache, _ := strconv.Atoi(exits)
@@ -223,11 +200,6 @@ func doSomethings(object oss.ObjectProperties) error {
 			timez, _ := time.Parse("2006-01-02 15:04:05", "2020-03-10 00:00:00")
 
 			if timestamps < timez.Unix() {
-				// log.Println("时间", int(timestamps) , timestamps_cache, int(timestamps) >= timestamps_cache)
-
-				//if int(timestamps) >= timestamps_cache {
-				//	bunt.Set("cache", k, strconv.Itoa(int(timestamps)), time.Hour*1209)
-				//} else {
 				// 走删除逻辑
 				a1 := fmt.Sprintf("/%s", object.Key)
 				if strings.Compare(a1, z.Path) == 0 {
@@ -249,13 +221,6 @@ func doSomethings(object oss.ObjectProperties) error {
 			} else {
 				log.Println("不处理", object.Key, timez, object.LastModified)
 			}
-
-			//} else {
-			// 存入
-			//	timestamps := object.LastModified.Unix()
-			//	bunt.Set("cache", k, strconv.Itoa(int(timestamps)), time.Hour*1209)
-			//}
-			//}
 		}
 	}
 	return nil

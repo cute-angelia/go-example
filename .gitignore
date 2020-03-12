@@ -19,3 +19,4 @@ vendor/
 *.db
 
 config/config.json
+.DS_Store

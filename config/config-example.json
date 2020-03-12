@@ -1,0 +1,9 @@
+{
+  "yq": {
+    "accessKeyId": "",
+    "accessKeySecret": "",
+    "endpoint": "http://oss-cn-shanghai.aliyuncs.com",
+    "host": "http://xxx.oss-cn-shanghai.aliyuncs.com",
+    "bucketName": "xxx-sh"
+  }
+}
